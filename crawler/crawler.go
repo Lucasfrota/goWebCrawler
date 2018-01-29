@@ -1,9 +1,10 @@
-package main
+package crawler
 
 import (
 	"fmt"
 	"golang.org/x/net/html"
 	"net/http"
+	//car "./crawler"
 )
 
 type errorString struct {
@@ -40,7 +41,8 @@ func getListOfTag(url string, tag string) ([]string, error) {
 			case nextToken == html.StartTagToken:
 				token := tokens.Token()
 
-			isAnchor := token.Data == tag
+				isAnchor := token.Data == tag
+
 				if isAnchor {
 
 					for _, a := range token.Attr {
@@ -87,25 +89,4 @@ func Crawler(firstUrl string){
 		urls = getUrlsInListOfUrls(urls)
 		fmt.Println(len(urls))
 	}
-}
-
-func main() {
-
-	Crawler("https://github.com/Lucasfrota")
-	/*
-  	firstUrl := "https://github.com/Lucasfrota"//"https://pt.wikipedia.org/wiki/Android"//"https://www.google.com.br/"
-
-	urls, _ := getUrls(firstUrl)
-	fmt.Println(len(urls))//printUrls(urls)
-
-	fmt.Println("---------------------------\n\n")
-
-	urls = getUrlsInListOfUrls(urls)
-	fmt.Println(len(urls))//printUrls(urls)
-
-	fmt.Println("---------------------------\n\n")
-
-	urls = getUrlsInListOfUrls(urls)
-	fmt.Println(len(urls))//printUrls(urls)
-	*/
 }
