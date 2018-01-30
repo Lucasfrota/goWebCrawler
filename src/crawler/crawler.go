@@ -9,6 +9,7 @@ import (
 //PUBLIC FUNCTIONS
 
 func Crawler(firstUrl string){
+
 	urls, _ := getUrls(firstUrl)
 
 	fmt.Println(len(urls))
@@ -47,7 +48,7 @@ func GetListOfTag(url string, tag string) ([]html.Token, error) {
 			}
 		}
 	}else{
-		return content, &errorString{"couldn't open " + url}
+		return content, &errorString{"something went wrong with " + url}
 	}
 }
 
@@ -61,14 +62,6 @@ func GetAttr(token html.Token, attr string) (string){
 }
 
 //PRIVATE FUNCTIONS
-
-type errorString struct {
-    s string
-}
-
-func (e *errorString) Error() string {
-    return e.s
-}
 
 func getUrls(url string) ([]string, error) {
 	var urls []string
@@ -99,4 +92,12 @@ func printUrls(slice []string){
 	for _, url := range slice {
 		fmt.Println(url)
 	}
+}
+
+type errorString struct {
+    s string
+}
+
+func (e *errorString) Error() string {
+    return e.s
 }
