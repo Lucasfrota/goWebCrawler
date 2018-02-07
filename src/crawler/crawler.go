@@ -2,6 +2,7 @@ package crawler
 
 import (
 	"fmt"
+	"errors"
 	"golang.org/x/net/html"
 	"net/http"
 )
@@ -10,11 +11,17 @@ import (
 
 func Crawler(firstUrl string){
 
+	iteration := 1
+
+	fmt.Println("iteration:", iteration)
+
 	urls, _ := getUrls(firstUrl)
 
 	fmt.Println(len(urls))
 
 	for true{
+		iteration++
+		fmt.Println("iteration:", iteration)
 		urls = getUrlsInListOfUrls(urls)
 		fmt.Println(len(urls))
 	}
@@ -40,6 +47,8 @@ func GetListOfTag(url string, tag string) ([]html.Token, error) {
 				case nextToken == html.StartTagToken:
 					token := tokens.Token()
 
+					//fmt.Println(token)
+
 					isTheTag := token.Data == tag
 
 					if isTheTag {
@@ -48,7 +57,7 @@ func GetListOfTag(url string, tag string) ([]html.Token, error) {
 			}
 		}
 	}else{
-		return content, &errorString{"something went wrong with " + url}
+		return content, errors.New("something went wrong with " + url)//&errorString{"something went wrong with " + url}
 	}
 }
 
@@ -62,6 +71,10 @@ func GetAttr(token html.Token, attr string) (string){
 }
 
 //PRIVATE FUNCTIONS
+
+func GetText(url string){
+	fmt.Println(GetListOfTag(url, "/p"))
+}
 
 func getUrls(url string) ([]string, error) {
 	var urls []string
@@ -92,12 +105,4 @@ func printUrls(slice []string){
 	for _, url := range slice {
 		fmt.Println(url)
 	}
-}
-
-type errorString struct {
-    s string
-}
-
-func (e *errorString) Error() string {
-    return e.s
 }
