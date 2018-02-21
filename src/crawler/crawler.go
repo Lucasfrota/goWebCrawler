@@ -47,8 +47,6 @@ func GetListOfTag(url string, tag string) ([]html.Token, error) {
 				case nextToken == html.StartTagToken:
 					token := tokens.Token()
 
-					//fmt.Println(token)
-
 					isTheTag := token.Data == tag
 
 					if isTheTag {
@@ -57,7 +55,7 @@ func GetListOfTag(url string, tag string) ([]html.Token, error) {
 			}
 		}
 	}else{
-		return content, errors.New("something went wrong with " + url)//&errorString{"something went wrong with " + url}
+		return content, errors.New("something went wrong with " + url)
 	}
 }
 
@@ -71,10 +69,6 @@ func GetAttr(token html.Token, attr string) (string){
 }
 
 //PRIVATE FUNCTIONS
-
-func GetText(url string){
-	fmt.Println(GetListOfTag(url, "/p"))
-}
 
 func getUrls(url string) ([]string, error) {
 	var urls []string
