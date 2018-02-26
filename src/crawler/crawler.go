@@ -5,6 +5,7 @@ import (
 	"errors"
 	"golang.org/x/net/html"
 	"net/http"
+	"strings"
 )
 
 //PUBLIC FUNCTIONS
@@ -75,9 +76,17 @@ func getUrls(url string) ([]string, error) {
 
 	tokens, err := GetListOfTag(url, "a")
 	for _, token := range tokens {
-		urls = append(urls, GetAttr(token, "href"))
+		//fmt.Println(token)
+		url := GetAttr(token, "href")
+		if validateUrl(url){
+			urls = append(urls, url)
+		}
 	}
 	return urls, err
+}
+
+func validateUrl(url string) (bool) {
+	return !strings.Contains(url, "#")
 }
 
 func getUrlsInListOfUrls(slice []string)([]string) {
